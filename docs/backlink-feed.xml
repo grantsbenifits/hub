@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Backlink Discovery Feed</title>
+  <id>https://grantsbenifits.github.io/hub/backlink-feed.xml</id>
+  <updated>2026-02-07T17:26:43Z</updated>
+  <link rel="self" href="https://grantsbenifits.github.io/hub/backlink-feed.xml" />
+
+  <entry>
+    <title>https://example.com/backlink-page-1</title>
+    <id>urn:link:example.com/backlink-page-1</id>
+    <link href="https://example.com/backlink-page-1" />
+    <updated>2026-02-07T17:26:43Z</updated>
+  </entry>
+  <entry>
+    <title>https://example.com/backlink-page-2</title>
+    <id>urn:link:example.com/backlink-page-2</id>
+    <link href="https://example.com/backlink-page-2" />
+    <updated>2026-02-07T17:26:43Z</updated>
+  </entry>
+</feed>
