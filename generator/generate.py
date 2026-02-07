@@ -78,10 +78,10 @@ def chunk(items, n):
 
 def build_index_page(dates_sorted, latest_date):
     updated = dt.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
-    latest_link = f'<p><a href="/d/{latest_date}.html">Open latest: {latest_date}</a></p>' if latest_date else ""
+    latest_link = f'<p><a href="{BASE_URL}/d/{latest_date}.html">Open latest: {latest_date}</a></p>' if latest_date else ""
     # recent days list
     recent = list(reversed(dates_sorted[-DAYS_ON_INDEX:]))
-    days_html = "\n".join([f'<li><a href="/d/{d}.html">{d}</a></li>' for d in recent]) if recent else "<li>No data yet</li>"
+    days_html = "\n".join([f'<li><a href="{BASE_URL}/d/{d}.html">{d}</a></li>' for d in recent]) if recent else "<li>No data yet</li>"
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -94,7 +94,7 @@ def build_index_page(dates_sorted, latest_date):
   <h1>Backlink Discovery Hub</h1>
   <p>Updated: {updated}</p>
   {latest_link}
-  <p><a href="/all.html">All recent links</a> | <a href="/backlink-feed.xml">Atom feed</a> | <a href="/sitemap.xml">Sitemap</a></p>
+  <p><a href="{BASE_URL}/all.html">All recent links</a> | <a href="{BASE_URL}/backlink-feed.xml">Atom feed</a> | <a href="{BASE_URL}/sitemap.xml">Sitemap</a></p>
   <h2>Recent days</h2>
   <ul>
     {days_html}
@@ -117,7 +117,7 @@ def build_daily_page(date_s, urls):
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-  <p><a href="/">Hub</a> | <a href="/all.html">All</a> | <a href="/backlink-feed.xml">Feed</a></p>
+  <p><a href="{BASE_URL}/">Hub</a> | <a href="{BASE_URL}/all.html">All</a> | <a href="{BASE_URL}/backlink-feed.xml">Feed</a></p>
   <h1>Daily Discovery: {date_s}</h1>
   <p>Updated: {updated}</p>
   <ol>
@@ -139,7 +139,7 @@ def build_all_page(unique_urls):
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-  <p><a href="/">Hub</a> | <a href="/backlink-feed.xml">Feed</a></p>
+  <p><a href="{BASE_URL}/">Hub</a> | <a href="{BASE_URL}/backlink-feed.xml">Feed</a></p>
   <h1>All Recent Links</h1>
   <p>Updated: {updated}</p>
   <ul>
