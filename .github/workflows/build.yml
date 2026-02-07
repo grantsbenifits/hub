@@ -1,0 +1,65 @@
+name: build-hub
+
+on:
+  push:
+  schedule:
+    - cron: "15 2 * * *"
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "Paste one or multiple URLs (one per line) to add to today's page"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: install
+        run: pip install -r requirements.txt
+
+      - name: generate
+        env:
+          BASE_URL: https://grantsbenifits.github.io/hub
+          EXTRA_URLS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.urls || '' }}
+          MAX_PER_PAGE: "10"
+          DAYS_ON_INDEX: "30"
+        run: python generator/generate.py
+
+      - name: commit docs
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs
+          git commit -m "update hub" || echo "no changes"
+          git push
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: "./docs"
+          production-deploy: true
+          deploy-message: "Deploy docs from GitHub Actions"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-args: "--prod"
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          working-directory: ./docs
+          vercel-project-name: ${{ github.event.repository.name }}
