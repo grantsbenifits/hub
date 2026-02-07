@@ -2,25 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Backlink Discovery Feed</title>
   <id>https://grantsbenifits.github.io/hub/backlink-feed.xml</id>
-  <updated>2026-02-07T17:45:02Z</updated>
+  <updated>2026-02-07T17:49:17Z</updated>
   <link rel="self" href="https://grantsbenifits.github.io/hub/backlink-feed.xml" />
 
   <entry>
     <title>https://example.com/backlink-page-1</title>
     <id>urn:link:example.com/backlink-page-1</id>
     <link href="https://example.com/backlink-page-1" />
-    <updated>2026-02-07T17:45:02Z</updated>
+    <updated>2026-02-07T17:49:17Z</updated>
   </entry>
   <entry>
     <title>https://example.com/backlink-page-2</title>
     <id>urn:link:example.com/backlink-page-2</id>
     <link href="https://example.com/backlink-page-2" />
-    <updated>2026-02-07T17:45:02Z</updated>
+    <updated>2026-02-07T17:49:17Z</updated>
   </entry>
   <entry>
-    <title>https://www.slideshare.net/housinggrantsfinder/</title>
-    <id>urn:link:www.slideshare.net/housinggrantsfinder/</id>
-    <link href="https://www.slideshare.net/housinggrantsfinder/" />
-    <updated>2026-02-07T17:45:02Z</updated>
+    <title>https://www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean?prompt_topic_bio=1</title>
+    <id>urn:link:www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean</id>
+    <link href="https://www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean?prompt_topic_bio=1" />
+    <updated>2026-02-07T17:49:17Z</updated>
   </entry>
 </feed>
