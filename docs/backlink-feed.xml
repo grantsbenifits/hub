@@ -2,7 +2,61 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Backlink Discovery Feed</title>
   <id>https://grantsbenifits.github.io/hub/backlink-feed.xml</id>
-  <updated>2026-02-07T18:11:01Z</updated>
+  <updated>2026-02-07T18:12:44Z</updated>
   <link rel="self" href="https://grantsbenifits.github.io/hub/backlink-feed.xml" />
 
+  <entry>
+    <title>https://housinggrants.github.io/home-repair-help-toolkit/</title>
+    <id>urn:link:housinggrants.github.io/home-repair-help-toolkit/</id>
+    <link href="https://housinggrants.github.io/home-repair-help-toolkit/" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://github.com/housinggrants/home-repair-help-toolkit</title>
+    <id>urn:link:github.com/housinggrants/home-repair-help-toolkit</id>
+    <link href="https://github.com/housinggrants/home-repair-help-toolkit" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://www.slideshare.net/housinggrantsfinder/</title>
+    <id>urn:link:www.slideshare.net/housinggrantsfinder/</id>
+    <link href="https://www.slideshare.net/housinggrantsfinder/" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://www.quora.com/Are-there-any-legitimate-roof-replacement-grants-for-homeowners/answer/Paula-D-Bean?prompt_topic_bio=1</title>
+    <id>urn:link:www.quora.com/Are-there-any-legitimate-roof-replacement-grants-for-homeowners/answer/Paula-D-Bean</id>
+    <link href="https://www.quora.com/Are-there-any-legitimate-roof-replacement-grants-for-homeowners/answer/Paula-D-Bean?prompt_topic_bio=1" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean?prompt_topic_bio=1</title>
+    <id>urn:link:www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean</id>
+    <link href="https://www.quora.com/What-is-the-USDA-Section-504-Home-Repair-Program-and-who-qualifies/answer/Paula-D-Bean?prompt_topic_bio=1" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://www.trustpilot.com/review/housinggrantsfinder.com</title>
+    <id>urn:link:www.trustpilot.com/review/housinggrantsfinder.com</id>
+    <link href="https://www.trustpilot.com/review/housinggrantsfinder.com" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://soundcloud.com/housinggrantsfinder/the_truth_about_government_hom</title>
+    <id>urn:link:soundcloud.com/housinggrantsfinder/the_truth_about_government_hom</id>
+    <link href="https://soundcloud.com/housinggrantsfinder/the_truth_about_government_hom" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://www.youtube.com/watch?v=jqwVk8D-7kw</title>
+    <id>urn:link:www.youtube.com/watch</id>
+    <link href="https://www.youtube.com/watch?v=jqwVk8D-7kw" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
+  <entry>
+    <title>https://about.me/housinggrants</title>
+    <id>urn:link:about.me/housinggrants</id>
+    <link href="https://about.me/housinggrants" />
+    <updated>2026-02-07T18:12:44Z</updated>
+  </entry>
 </feed>
