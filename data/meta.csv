@@ -1,1 +1,2 @@
 url,final_url,status_code,content_type,title,description,robots_meta_noindex,x_robots_tag,last_fetch_utc
+https://example.com/,,,,,,,error:ConnectionError,2026-02-08 05:14:39

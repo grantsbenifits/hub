@@ -239,10 +239,17 @@ def write_meta_csv(path: str, meta: dict):
 # HTML builders
 # -------------------------
 
-def common_head(title: str, description: str, path: str):
+def common_head(title: str, description: str, path: str, schema_obj=None):
     t = escape_html(title)
     d = escape_html(description)
     canon = canonical_for(path)
+    schema_block = ""
+    if schema_obj:
+        try:
+            schema_block = '<script type="application/ld+json">' + json.dumps(schema_obj, ensure_ascii=False, separators=(",", ":")) + "</script>"
+        except Exception:
+            schema_block = ""
+
     return f"""<head>
   <meta charset="utf-8">
   <title>{t}</title>
@@ -251,6 +258,8 @@ def common_head(title: str, description: str, path: str):
   <meta name="robots" content="index,follow">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="alternate" type="application/atom+xml" title="Atom feed" href="{BASE_URL}/backlink-feed.xml">
+  <link rel="alternate" type="application/json" title="Recent JSON" href="{BASE_URL}/recent.json">
+  {schema_block}
   <style>
     :root {{
       --bg: #0b1220;
@@ -330,9 +339,16 @@ def build_index_page(dates_sorted, months_sorted, latest_date):
     months_html = "".join([f'<li><a href="{BASE_URL}/m/{m}.html">{m}</a></li>' for m in reversed(months_sorted[-18:])]) if months_sorted else "<li>No months yet</li>"
 
     path = "/"
+    schema_obj = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Backlink Discovery Hub",
+        "dateModified": updated,
+        "hasPart": [{"@type":"WebPage","url": f"{CANONICAL_BASE}/d/{d}.html"} for d in recent[:20]]
+    }
     return f"""<!doctype html>
 <html lang="en">
-{common_head("Backlink Discovery Hub", desc, path)}
+{common_head("Backlink Discovery Hub", desc, path, schema_obj)}
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -407,9 +423,16 @@ def build_daily_page(date_s, items):
         plain.append(url)
 
     path = f"/d/{date_s}.html"
+    plain_txt_escaped = escape_html("\n".join(plain))
+    schema_obj = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": f"Daily Discovery {date_s}",
+        "itemListElement": [{"@type":"ListItem","position": i+1, "url": u} for i, u in enumerate(plain[:MAX_PER_PAGE])]
+    }
     return f"""<!doctype html>
 <html lang="en">
-{common_head(f"Daily Discovery {date_s}", desc, path)}
+{common_head(f"Daily Discovery {date_s}", desc, path, schema_obj)}
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -430,7 +453,7 @@ def build_daily_page(date_s, items):
     </div>
 
     <h2>Plain list</h2>
-    <pre>{escape_html("\\n".join(plain))}</pre>
+    <pre>{plain_txt_escaped}</pre>
 
     <div class="footer">Source: {escape_html(BASE_URL)}</div>
   </div>
@@ -442,9 +465,15 @@ def build_daily_index_page(dates_sorted):
     desc = "Index of daily pages."
     li = "".join([f'<li><a href="{BASE_URL}/d/{d}.html">{d}</a></li>' for d in reversed(dates_sorted[-365:])]) if dates_sorted else "<li>No data</li>"
     path = "/d/index.html"
+    schema_obj = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Daily Index",
+        "hasPart": [{"@type":"WebPage","url": f"{CANONICAL_BASE}/d/{d}.html"} for d in dates_sorted[-365:]]
+    }
     return f"""<!doctype html>
 <html lang="en">
-{common_head("Daily Index", desc, path)}
+{common_head("Daily Index", desc, path, schema_obj)}
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -489,9 +518,16 @@ def build_month_page(month_s, items):
 </div>""")
         blocks.append(f'<div class="grid">{"".join(cards)}</div>')
     path = f"/m/{month_s}.html"
+    days = sorted(groups.keys(), reverse=True)
+    schema_obj = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": f"Monthly Archive {month_s}",
+        "hasPart": [{"@type":"WebPage","url": f"{CANONICAL_BASE}/d/{d}.html"} for d in days[:62]]
+    }
     return f"""<!doctype html>
 <html lang="en">
-{common_head(f"Monthly Archive {month_s}", desc, path)}
+{common_head(f"Monthly Archive {month_s}", desc, path, schema_obj)}
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -535,10 +571,17 @@ def build_all_page(unique_items):
 </div>""")
         plain.append(url)
 
+    plain_txt_escaped = escape_html("\n".join(plain))
     path = "/all.html"
+    schema_obj = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "All Recent Links",
+        "itemListElement": [{"@type":"ListItem","position": i+1, "url": u} for i, u in enumerate(plain[:200])]
+    }
     return f"""<!doctype html>
 <html lang="en">
-{common_head("All Recent Links", desc, path)}
+{common_head("All Recent Links", desc, path, schema_obj)}
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -559,7 +602,7 @@ def build_all_page(unique_items):
     </div>
 
     <h2>Plain list</h2>
-    <pre>{escape_html("\\n".join(plain))}</pre>
+    <pre>{plain_txt_escaped}</pre>
   </div>
 </body>
 </html>"""
