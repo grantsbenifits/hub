@@ -7,12 +7,16 @@ on:
   workflow_dispatch:
     inputs:
       urls:
-        description: "Paste one or multiple URLs (one per line) to add to today's page"
+        description: "Paste one or multiple URLs (one per line). Optional format: URL | note | tag1,tag2"
         required: false
         default: ""
 
 permissions:
   contents: write
+
+concurrency:
+  group: build-hub
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -23,6 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: install
         run: pip install -r requirements.txt
@@ -30,16 +35,20 @@ jobs:
       - name: generate
         env:
           BASE_URL: https://grantsbenifits.github.io/hub
+          CANONICAL_BASE: https://grantsbenifits.github.io/hub
           EXTRA_URLS: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.urls || '' }}
-          MAX_PER_PAGE: "10"
-          DAYS_ON_INDEX: "30"
+          MAX_PER_PAGE: "15"
+          DAYS_ON_INDEX: "45"
+          FETCH_META: "1"
+          META_TIMEOUT: "12"
+          META_MAX_BYTES: "180000"
         run: python generator/generate.py
 
-      - name: commit docs
+      - name: commit docs and data
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add docs
+          git add docs data || true
           git commit -m "update hub" || echo "no changes"
           git push
 
@@ -55,11 +64,12 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Deploy to Vercel
+        if: ${{ secrets.VERCEL_PROJECT_ID != '' }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-args: "--prod"
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./docs
-          vercel-project-name: ${{ github.event.repository.name }}
